@@ -1,0 +1,6 @@
+black = "ffffff"
+blue = "#1E90FF"
+mBlue = "#0000CD"
+pathYellow = "fcdd76"
+white = "#FFFFFF"
+obstacleGrey = "c7c7c7"
