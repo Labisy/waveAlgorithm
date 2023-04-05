@@ -235,7 +235,7 @@ class MainWindowInit(QWidget):
             if cell_ind.status is None:
                 weight = self.actual_cell.weight + 1
                 cell_ind.set_info(self.counter, weight, direction)
-                cell_ind.status = 'filled'
+                cell_ind.status = "fail"
                 cell_ind.parent_cell = self.actual_cell
                 self.counter += 1
                 self.cell.append(cell_ind)
