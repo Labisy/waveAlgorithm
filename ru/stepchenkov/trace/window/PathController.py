@@ -258,7 +258,7 @@ class MainWindowInit(QWidget):
 
     def coloring(self) -> None:
         while self.actual_cell.parent_cell is not None:
-            self.actual_cell.set_style(ColorType.pathYellow)
+            self.actual_cell.set_style(ColorType.yellow)
             self.actual_cell = self.actual_cell.parent_cell
-        self.start.set_style(ColorType.pathYellow)
-        self.finish.set_style(ColorType.pathYellow)
+        self.start.set_style(ColorType.yellow)
+        self.finish.set_style(ColorType.yellow)
