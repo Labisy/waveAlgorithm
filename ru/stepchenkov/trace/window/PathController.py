@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QGridLayout, QVBoxLayout, QMessageBox
 
 from ru.stepchenkov.trace.buttons.ButtonSetting import MenuButton
-from ru.stepchenkov.trace.buttons.ButtonController import TraceButton
+from ru.stepchenkov.trace.buttons.ButtonView import TraceButton
 from ru.stepchenkov.trace.types import ColorType
 from ru.stepchenkov.trace.types import TextType
 
