@@ -27,4 +27,4 @@ The wave tracing algorithm using the enclosing rectangle method will help to fin
 
 ## License
 
-Project streamApi is distributed under the Apache License 2.0
+Project waveAlgorithm is distributed under the Apache License 2.0
