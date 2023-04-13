@@ -21,11 +21,6 @@ The wave tracing algorithm using the enclosing rectangle method will help to fin
 - `Build` - Start print the path.
 - `Cancel` - Refresh the position.
 
-## Distribute
-
-- [Service Name](Page Link)
-
-
 ## Developers
 
 - [Labisy](https://github.com/Labisy)
