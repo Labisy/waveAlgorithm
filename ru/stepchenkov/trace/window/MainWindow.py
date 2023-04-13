@@ -1,5 +1,4 @@
 from PyQt5.QtCore import QTimer, QSize
-from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QMainWindow
 
 from ru.stepchenkov.trace.window.PathController import MainWindowInit

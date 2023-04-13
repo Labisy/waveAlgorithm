@@ -7,7 +7,6 @@ from ru.stepchenkov.trace.buttons.ButtonSetting import MenuButton
 from ru.stepchenkov.trace.buttons.ButtonView import TraceButton
 from ru.stepchenkov.trace.types import ColorType
 from ru.stepchenkov.trace.types import TextType
-from ru.stepchenkov.trace.helpUtils import WindowSize
 
 if TYPE_CHECKING:
     from ru.stepchenkov.trace.window.MainWindow import MainWindow
@@ -26,12 +25,10 @@ class MainWindowInit(QWidget):
         '''
         self.counter = 1
         self.cell = []
-        # a = int(WindowSize.weight.get())
-        # b = int(WindowSize.height.get())
-        # self.weight = a
-        # self.height = b
         self.weight: int = 10
         self.height: int = 10
+        self.lu_point = None
+        self.rd_point = None
 
         """
             1) Режимы start|end|obstacle.
@@ -44,7 +41,7 @@ class MainWindowInit(QWidget):
         self.start: Optional[TraceButton] = None
         self.finish: Optional[TraceButton] = None
         self.actual_cell: Optional[TraceButton] = None
-        self.quit = False
+        self.quit = True
 
         """
             Горизонтальная панель
@@ -170,6 +167,12 @@ class MainWindowInit(QWidget):
             self.actual_cell = self.start
             self.mode = None
 
+            self.lu_point = (self.start.coordinates[0] if self.start.coordinates[0] < self.finish.coordinates[0] else self.finish.coordinates[0],
+                             self.start.coordinates[1] if self.start.coordinates[1] < self.finish.coordinates[1] else self.finish.coordinates[1])
+
+            self.rd_point = (self.start.coordinates[0] if self.start.coordinates[0] > self.finish.coordinates[0] else self.finish.coordinates[0],
+                             self.start.coordinates[1] if self.start.coordinates[1] > self.finish.coordinates[1] else self.finish.coordinates[1])
+
             """
                 Изменения текста на кнопках и добавление новых функций
             """
@@ -196,10 +199,8 @@ class MainWindowInit(QWidget):
         построение пути.
     """
     def createPaths(self) -> None:
-        while True:
+        while self.quit:
             self.step()
-            if self.quit:
-                break
 
     """
         берутся координаты текущей ячейки, на основе этих координат проверяются
@@ -212,7 +213,6 @@ class MainWindowInit(QWidget):
     def step(self) -> None:
         row = self.actual_cell.coordinates[0]
         column = self.actual_cell.coordinates[1]
-
         status = False
         direction = ""
         if row > 0 and TextType.up not in self.actual_cell.paths:
@@ -236,6 +236,8 @@ class MainWindowInit(QWidget):
             direction = TextType.left
             self.actual_cell.paths.append(TextType.left)
         if status:
+            if not ((self.lu_point[0] <= row <= self.rd_point[0]) and (self.lu_point[1] <= column <= self.rd_point[1])):
+                return
             cell_ind = self.trace_layout.itemAtPosition(row, column).widget()
             if cell_ind.status is None:
                 weight = self.actual_cell.weight + 1
@@ -249,13 +251,18 @@ class MainWindowInit(QWidget):
                 self.finishButton.setEnabled(False)
                 self.startButton.setEnabled(False)
                 self.coloring()
-                self.quit = True
-            else:
-                self.step()
+                self.quit = False
         else:
-            self.actual_cell = self.cell[0]
-            self.cell.remove(self.actual_cell)
-            self.step()
+            if len(self.cell) == 0:
+                self.quit = False
+                error = QMessageBox(self)
+                error.setWindowTitle("Error")
+                error.setText("Путь от точки A к B не может быть построен!")
+                error.setStyleSheet(f"background-color: {ColorType.white};")
+                error.setIcon(QMessageBox.Critical)
+                error.show()
+                return
+            self.actual_cell = self.cell.pop(0)
 
     """
         Окрашивание конечного пути
