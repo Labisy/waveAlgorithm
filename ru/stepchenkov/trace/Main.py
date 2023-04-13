@@ -18,17 +18,12 @@ def exception_hook(exc_type, exc_value, exc_tb) -> None:
 """
     Запуск.
 """
-# if __name__ == '__main__':
-#     sys.excepthook = exception_hook
-#     app = QApplication(sys.argv)
-#     ex = MainWindow()
-#     app.exec_()
-#     del ex, app
-
-
-def start():
+if __name__ == '__main__':
     sys.excepthook = exception_hook
     app = QApplication(sys.argv)
     ex = MainWindow()
     app.exec_()
     del ex, app
+
+
+

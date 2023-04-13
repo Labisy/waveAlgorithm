@@ -7,7 +7,6 @@ from ru.stepchenkov.trace.buttons.ButtonSetting import MenuButton
 from ru.stepchenkov.trace.buttons.ButtonView import TraceButton
 from ru.stepchenkov.trace.types import ColorType
 from ru.stepchenkov.trace.types import TextType
-from ru.stepchenkov.trace.helpUtils import WindowSize
 
 if TYPE_CHECKING:
     from ru.stepchenkov.trace.window.MainWindow import MainWindow
@@ -26,10 +25,6 @@ class MainWindowInit(QWidget):
         '''
         self.counter = 1
         self.cell = []
-        # a = int(WindowSize.weight.get())
-        # b = int(WindowSize.height.get())
-        # self.weight = a
-        # self.height = b
         self.weight: int = 10
         self.height: int = 10
         self.lu_point = None
